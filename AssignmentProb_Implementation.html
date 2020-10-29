@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Assignment Problem- Implementation</title>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Assignment Problem</title>
+    <!--  CSS link-->
+    <link rel="stylesheet" href="index_styles.css">
+    <!-- bootstrap's CSS link for navbar-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- font awesome link to add different icons -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Comfortaa&family=Patua+One&display=swap" rel="stylesheet">
+    <style type="text/css">
+        body{
+            margin:100px;
+        }
+        h2{
+            text-align: center;
+        }
+        button{
+            background-color: white;
+            border-style: solid;
+            border-width: 4px;
+            border-color: #7579e7;
+        }
+        button:hover{
+            background-color: #7579e7;
+        }
+    </style>
+</head>
+<script src="AssignmentProbCode.js"></script>
+
+<body>
+    <div class="nav-options" id="navbar">
+      <div class="container-fluid">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #7579e7">
+          <ul class="navbar-nav ml-auto">
+            <!--<a class="navbar-brand mb-0 h1" href="#">Design and Analysis of Algorithms</a>-->
+            <li class="nav-item"><a class="nav-link" href="HomePage_New.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="AboutUs.html">About US</a></li>
+            <li class="nav-item"><a class="nav-link" href="stable_info.html">Stable Marriage Problem</a></li>
+            <li class="nav-item"><a class="nav-link" href="AssignmentProblem.html">Assignment Problem</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div>
+    <h2 style="font-family: 'Berkshire Swash', cursive;">The Assignment Problem-Implementation</h2>
+    <hr>
+    <p>Welcome to the implementation of the assignment problem! Brief idea of the problem: 
+    	Let there be n agents and n tasks. Any agent can be assigned to perform any task, incurring some cost that may vary depending on the agent-task assignment. It is required to perform all tasks by assigning exactly one agent to each task and exactly one task to each agent in such a way that the total cost of the assignment is minimized.
+        Enter the value of n and the cost that each agent will require to perform a task and you will get the minimum cost required</p>
+    <form>
+     <label for="n">Enter the value of n: </label>
+    	<input type="number" name="n" id="n"/>
+    	<button type="button" onclick="inputCosts(document.getElementById('n').value)" style="margin: 5px"> Submit </button> <br><br>
+    	<div id="parent"></div>
+    	<button type="button" onclick="calculate(document.getElementById('n').value)" style="margin: 5px;margin-top: 15px;"> Calculate </button> <br><br>
+    	<div id="Hello"></div>
+        <div id="parent1"></div>
+        <div id="step1"></div>
+        <div id="step2"></div>
+    </form>
+   </div> 
+</body>
+</html>

@@ -1,0 +1,41 @@
+Design and Analysis of Algorithms project
+
+TITLE: InfoTech- Educative website and blog
+
+
+CREATORS: Vaishnavi Rathod and Riya Tendulkar
+
+DESCRIPTION: A website that contains all the information about chosen algorithms and their implementation in front end.
+
+DEMO: Web Development, blog on Medium
+
+TECHNOLOGIES USED: HTML, CSS and Javascript
+
+UNIQUE ELEMENTS: specific solved examples, algorithms and complexity analysis of chosen problems with user friendly interface to try solving the problem and a blog published for detailed reading.
+
+TECHNICAL DESCRIPTION: download the given files and store all the files and images in the same folder. 
+			
+HOW TO START THE PROGRAM: Start the program by opening "Homepage_New.html" file in the web browser and navigate through the pages using on screen options.
+
+FILES DESCRIPTION:
+1. Homepage_New.html: Main home page to navigate to other pages
+
+2. index_styles.css : Style sheet for the home page 
+
+3. AboutUs.html: Brief description about the creators.
+
+4. AssignmentProblem.html: Descriptive Information about the assignment problem
+
+5. AssignmentProb_Implementation.html: HTML Code Implementation to take dynamic input and display output for assignment problem
+
+6. AssignmentProbCode.js: JavaScript code implementation the algorithm of assignment problem
+
+7. AssignmentProblem_Style.css: Style Sheet for the pages of assignment problem
+
+8. stable_info.html: Descriptive Information about the stable marriage  problem
+
+9. stable_marriage_html.html: HTML Code Implementation to take dynamic input and display output for stable marriage problem
+
+10. stable_marriage_script.js: JavaScript code implementation of the algorithm of stable marriage problem
+
+11. stable_marriage_style.css: Style Sheet for the pages of stable marriage problem

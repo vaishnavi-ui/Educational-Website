@@ -1,0 +1,58 @@
+body{
+  margin: 100px;
+  margin-bottom: 200px;
+  font-weight: 500;
+}
+table,td,th{
+  padding: 5px;
+  border: solid 3px #0275d8;
+  text-align: center;
+  margin-bottom: 10px;
+}
+td{
+  background-color: white;
+}
+td,th{
+  height: 4px;
+  width: 100px;
+}
+h3,h2,h1{
+  text-align: center;
+}
+
+@keyframes flickers{
+  from {background-color: white;}
+  to{background-color: skyblue;}
+}
+.tableValues{
+  background-color: white;
+  animation-name: flickers;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+.top-divs,.entry,.matched{
+  background-color: #ffb0b0;
+}
+.top-div{
+  padding: 6%;
+}
+.middle-div{
+  padding: 4%;
+  text-align: center;
+}
+.bottom-div{
+  text-align: center;
+}
+.p-intro,.p-algo,.p-comp{
+  font-family:candara;
+  font-size: 150%;
+}
+.entry,.people_entry,.matched{
+  text-align: center;
+}
+table{
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid black;
+  background-color:#93b5e1;
+}

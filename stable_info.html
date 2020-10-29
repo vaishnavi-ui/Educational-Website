@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Gale Shapley Algorithm</title>
+    <!-- to linke css file to this html file for styles-->
+    <link rel="stylesheet" href="stable_marriage_style.css">
+    <!-- bootstrap's CSS link for navbar,button-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- font awesome link to add different icons -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <!-- google fonts link for adding fonts to text-->
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Comfortaa&family=Patua+One&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="nav-options" id="navbar">
+        <div class="container-fluid">
+          <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #7579e7">
+            <ul class="navbar-nav ml-auto">
+              <!--<a class="navbar-brand mb-0 h1" href="#">Design and Analysis of Algorithms</a>-->
+              <li class="nav-item"><a class="nav-link" href="AboutUs.html">About</a></li>
+              <li class="nav-item"><a class="nav-link" href="Homepage_New.html">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="stable_info.html">Stable Marriage Problem</a></li>
+              <li class="nav-item"><a class="nav-link" href="AssignmentProblem.html">Assignment Problem</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    <div class="top-div">
+      <a id="Intro">
+    <h2 style="font-family: 'Berkshire Swash', cursive;"><em>The Stable Marriage Problem</em></h2>
+    <hr>
+    <img src="stable1.png" alt="stable1" style="padding-left:170px">
+    <p style="font-family: verdana">In this article we discuss the <strong>Stable Marriage Problem</strong>. The stable problem is where the preferences of men and women are inputed to display the best possible match. To solve this, we use the <strong>Gale-Shapely Algorithm</strong>.It is a truthful mechanism from the point of view of the participants for whom it provides the optimal solution. We discuss the problem, example, approaches, the algorithm and solve an example using Gale Shapely. Use the following links to navigate:
+    	<ul>
+    		<li><a href="#AboutProblem">About the Problem</a></li>
+    		<li><a href="#Example">Example of Stable Marriage Problem</a></li>
+    		<li><a href="#Approach">Approaches on solving the stable marriage problem</a></li>
+    		<li><a href="#Algo">Gale-Shapely Algorithm</a></li>
+        <li><a href="Complexity">Complexity Analysis</a></li>
+    		<li><a href="#ExpUsingAlgo">An Example using Gale Shapely Algorithm</a></li>
+    	</ul></p>
+      <br><br><br>
+      </a>
+
+      <div class="AboutProblem">
+        <a id="AboutProblem">
+          <h3 style="font-family: 'Patua One', cursive;">What is the problem about?</h3>
+  		    <hr>
+          <p style="font-family: verdana">The Stable Marriage Problem states that given N men and N women, where each person has ranked all members of the opposite sex in order of preference, marry the men and women together such that there are no two people of opposite sex who would both rather have each other than their current partners. If there are no such people, all the marriages are “stable”.<br>
+            We need to ensure the following things:
+    			<strong><ol>
+    			<li> The number of men and women should be the same.</li>
+    			<li> Stable marriage exists only between a man and a woman. So,each man must give the preference of only women and vice versa.</li>
+    			<li> We want to find the stable marriage where no two people of opposite sex that would prefer each other over their assigned partners.</li></ol></strong></p>
+          <img src="stable2.png" alt="stable2" style="width:30%">
+          <br><br><br>
+        </a>
+        <br>
+      </div>
+
+      <div>
+        <a id="Example">
+        <h3 style="font-family: 'Patua One', cursive;">Example</h3>
+        <hr>
+        <p style="font-family: verdana">Let there be two men m1 and m2 and two women w1 and w2. Their marriage preferences are given below. We have to marry two people who wouldn't have anyone else as their partner.</p>
+        <table>
+          <tr>
+            <th>Members</th>
+            <th colspan="2">Preferences</th>
+          </tr>
+          <tr>
+            <th>Man 1</th>
+            <td>w1</td>
+            <td>w2</td>
+          </tr>
+          <tr>
+            <th>Man 2</th>
+            <td>w1</td>
+            <td>w2</td>
+          </tr>
+          <tr>
+            <th>Woman 1</th>
+            <td>m1</td>
+            <td>m2</td>
+          </tr>
+          <tr>
+            <th>Woman 2</th>
+            <td>m1</td>
+            <td>m2</td>
+          </tr>
+        </table>
+        <p style="font-family: verdana">Stable Marriage between 2 men and 2 women exists as:</p>
+        <table>
+          <tr>
+            <th colspan="2">Married to</th>
+          </tr>
+          <tr>
+            <td>Man 1</td>
+            <td>Woman 1</td>
+          </tr>
+          <tr>
+            <td>Man 2</td>
+            <td>Woman 2</td>
+          </tr>
+        </table>
+        </a>
+        <br><br><br>
+      </div>
+
+      <div>
+        <a id="Approach">
+          <h3 align="center" style="font-family: 'Patua One', cursive;">Approaches</h3><hr>
+  	   		<ol>
+  	   			<li><strong><em>Approach 1: Brute Force</em></strong><br>
+  	   				<p style="font-family: verdana">The first approach is the brute force approach where we try all the combinations one by one to find the optimal solution. This is a tedious approach because as the number of men and women will go on increasing and the matching combinations will be a lot to get through.</p></li>
+  	    		<li><strong><em>Approach 2: Gale Shapely Algorithm</em></strong><br>
+  	    			<p style="font-family: verdana">The algorithm is much faster and yeilds better results.The idea is to iterate through all free men while there is any free man available. Every free man goes to all women in his preference list according to the order. For every woman he goes to, he checks if the woman is free, if yes, they both become engaged. If the woman is not free, then the woman chooses either says no to him or dumps her current engagement according to her preference list. So an engagement done once can be broken if a woman gets better option. Time Complexity of Gale-Shapley Algorithm is O(n2).</p></li>
+              <br><br><br>
+        </a>
+      </div>
+
+      <div style="height: 450px;">
+        <a id="Algo">
+          <h3 style="font-family: 'Patua One', cursive;">Algorithm</h3><hr>
+  	   		<div style="width: 60%;font-family: verdana">
+  		   		<ol>
+  			   		<li> Begin with every man and woman being free.</li>
+  			   		<li>While there exists a free woman w, she proposes to her most prefered man m whom she hasn't proposed to yet as follows:
+  			   		<ol style="list-style-type: lower-roman;">
+  			   			<li>w proposes to m</li>
+  			   			<li>if m is free: m and w get engaged and (m,w) is added to S</li>
+  			   			<li>if m is currently engaged to another woman, w' and he prefers w' over w i.e. M(w')>M(w), then w remains free.</li>
+                <li>if m is currently engaged to another woman, w' and he prefers w over w' i.e. M(w)>M(w'), then m breaks off engagement with w' and gets engaged to w.(m,w') is removed from S and (m,w) added to S. w' becomes free</li>
+  			   		</ol></li>
+  			   		<li>Return S as stable marriage.</li>
+  			   		<li>End</li>
+  		   		</ol>
+        </a>
+        <br><br><br>
+      </div>
+      <div >
+        <a id="Complexity">
+          <h3 style="font-family: 'Patua One', cursive;">Complexity Analysis</h3><hr>
+          <p style="font-family: verdana">The run time complexity of Gale Shapely's algorithm is given as <strong>O(N^2)</strong></p>
+          <strong>There are no more that n^2 proposals during a run of the Gale-Shaply algorithm</strong>
+          <p style="font-family: verdana">No woman proposes to a man more than once. If the all n women propose to all n men,there would be n^2 proposals. Since no woman proposes to a man more than once, there can’t be any additional proposals.</p>
+          <strong>Each proposal can be performed in O(1) time</strong>
+          <p style="font-family: verdana">This can be achieved by using certain data structures to maintain the needed information.Comparing preferences could take O(n) time if we only use the preference lists, but by storing an array of preferences indexed by people this can be performed in constant time. Setting up this array took Θ(n^2) time during setup, but results in a faster runtime within this loop. It is common in algorithm design to take more time on setup which is executed once to save time on steps that are executed many times such as the body of a loop.</p>
+          <br><br><br>
+        </a>
+
+      </div>
+      <div>
+        <a id="ExpUsingAlgo">
+  	   		<h3 style="font-family: 'Patua One', cursive;">Solving an Example Using Stable Marriage Problem</h3>
+  	   		<hr>
+          <p style="font-family: verdana">Let us assume 4 men and 4 women and their preferences for marriage as given below.</p>
+          <table>
+            <tr>
+              <th>Members</th>
+              <th colspan="4">Preferences</th>
+            </tr>
+            <tr>
+              <th>Man 1</th>
+                <td>w1</td>
+                <td>w2</td>
+                <td>w3</td>
+                <td>w4</td>
+            </tr>
+            <tr>
+              <th>Man 2</th>
+                <td>w2</td>
+                <td>w1</td>
+                <td>w4</td>
+                <td>w3</td>
+            </tr>
+            <tr>
+              <th>Man 3</th>
+                <td>w2</td>
+                <td>w3</td>
+                <td>w4</td>
+                <td>w1</td>
+            </tr>
+            <tr>
+              <th>Man 4</th>
+                <td>w3</td>
+                <td>w1</td>
+                <td>w4</td>
+                <td>w2</td>
+            </tr>
+            <tr>
+              <th>Woman 1</th>
+                <td>m1</td>
+                <td>m3</td>
+                <td>m4</td>
+                <td>m2</td>
+            </tr>
+            <tr>
+              <th>Woman 2</th>
+                <td>m1</td>
+                <td>m2</td>
+                <td>m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 3</th>
+                <td>m1</td>
+                <td>m2</td>
+                <td>m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 4</th>
+                <td>m4</td>
+                <td>m3</td>
+                <td>m2</td>
+                <td>m1</td>
+            </tr>
+          </table>
+          <em><p style="font-family: verdana">Step 1:Since Man 1 is the first free man, he is picked.We browse through his women preferences.His first choice is woman 1.So m1 and w1 get engaged.</p></em>
+          <table>
+            <tr>
+              <th>Members</th>
+              <th colspan="4">Preferences</th>
+            </tr>
+            <tr>
+              <th>Man 1</th>
+                <td class="tableValues">w1</td>
+                <td>w2</td>
+                <td>w3</td>
+                <td>w4</td>
+            </tr>
+            <tr>
+              <th>Man 2</th>
+                <td>w2</td>
+                <td>w1</td>
+                <td>w4</td>
+                <td>w3</td>
+            </tr>
+            <tr>
+              <th>Man 3</th>
+                <td>w2</td>
+                <td>w3</td>
+                <td>w4</td>
+                <td>w1</td>
+            </tr>
+            <tr>
+              <th>Man 4</th>
+                <td>w3</td>
+                <td>w1</td>
+                <td>w4</td>
+                <td>w2</td>
+            </tr>
+            <tr>
+              <th>Woman 1</th>
+                <td class="tableValues">m1</td>
+                <td>m3</td>
+                <td>m4</td>
+                <td>m2</td>
+            </tr>
+            <tr>
+              <th>Woman 2</th>
+                <td>m1</td>
+                <td>m2</td>
+                <td>m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 3</th>
+                <td>m1</td>
+                <td>m2</td>
+                <td>m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 4</th>
+                <td>m4</td>
+                <td>m3</td>
+                <td>m2</td>
+                <td>m1</td>
+            </tr>
+          </table>
+          <em><p style="font-family: verdana">Step 2:Next free man is Man 2. So we pick him.We go through his preferences.Since his choice is woman 2 who is free, they get engaged. </p></em>
+          <table>
+            <tr>
+              <th>Members</th>
+              <th colspan="4">Preferences</th>
+            </tr>
+            <tr>
+              <th>Man 1</th>
+                <td style="background-color:#ccf6c8">w1</td>
+                <td>w2</td>
+                <td>w3</td>
+                <td>w4</td>
+            </tr>
+            <tr>
+              <th>Man 2</th>
+                <td class="tableValues">w2</td>
+                <td>w1</td>
+                <td>w4</td>
+                <td>w3</td>
+            </tr>
+            <tr>
+              <th>Man 3</th>
+                <td>w2</td>
+                <td>w3</td>
+                <td>w4</td>
+                <td>w1</td>
+            </tr>
+            <tr>
+              <th>Man 4</th>
+                <td>w3</td>
+                <td>w1</td>
+                <td>w4</td>
+                <td>w2</td>
+            </tr>
+            <tr>
+              <th>Woman 1</th>
+                <td style="background-color:#ccf6c8">m1</td>
+                <td>m3</td>
+                <td>m4</td>
+                <td>m2</td>
+            </tr>
+            <tr>
+              <th>Woman 2</th>
+                <td>m1</td>
+                <td class="tableValues">m2</td>
+                <td>m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 3</th>
+                <td>m1</td>
+                <td>m2</td>
+                <td>m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 4</th>
+                <td>m4</td>
+                <td>m3</td>
+                <td>m2</td>
+                <td>m1</td>
+            </tr>
+          </table>
+          <em> <p style="font-family: verdana">Step 3:Now the next free man is man 3. His first preference is the same as man 2. To resolve this, we go through the woman's preferences. Woman 2 prefers man 1, who is taken. Then she prefers man 2 over man 3.So man 2 and woman 2 remain engaged.We check man 3 's next choice. It is woman 3, who is free so they get engaged.</p></em>
+          <table>
+            <tr>
+              <th>Members</th>
+              <th colspan="4">Preferences</th>
+            </tr>
+            <tr>
+              <th>Man 1</th>
+                <td style="background-color:#ccf6c8">w1</td>
+                <td>w2</td>
+                <td>w3</td>
+                <td>w4</td>
+            </tr>
+            <tr>
+              <th>Man 2</th>
+                <td style="background-color:#ffd5cd">w2</td>
+                <td>w1</td>
+                <td>w4</td>
+                <td>w3</td>
+            </tr>
+            <tr>
+              <th>Man 3</th>
+                <td>w2</td>
+                <td class="tableValues">w3</td>
+                <td>w4</td>
+                <td>w1</td>
+            </tr>
+            <tr>
+              <th>Man 4</th>
+                <td>w3</td>
+                <td>w1</td>
+                <td>w4</td>
+                <td>w2</td>
+            </tr>
+            <tr>
+              <th>Woman 1</th>
+                <td style="background-color:#ccf6c8">m1</td>
+                <td>m3</td>
+                <td>m4</td>
+                <td>m2</td>
+            </tr>
+            <tr>
+              <th>Woman 2</th>
+                <td>m1</td>
+                <td style="background-color:#ffd5cd">m2</td>
+                <td>m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 3</th>
+                <td>m1</td>
+                <td>m2</td>
+                <td class="tableValues">m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 4</th>
+                <td>m4</td>
+                <td>m3</td>
+                <td>m2</td>
+                <td>m1</td>
+            </tr>
+          </table>
+        <em><p style="font-family: verdana">Step 4:The next and final free man is man 4. His preferences are woman 3 who is taken and prefers her partner over man 4. Then we check for next choice woman 1. She is also taken and prefers her partner. Then we move on to woman 4 who is man 4 's 3rd preference.Since both of them are free, they get engaged.</p></em>
+          <table>
+            <tr>
+              <th>Members</th>
+              <th colspan="4">Preferences</th>
+            </tr>
+            <tr>
+              <th>Man 1</th>
+                <td style="background-color:#ccf6c8">w1</td>
+                <td>w2</td>
+                <td>w3</td>
+                <td>w4</td>
+            </tr>
+            <tr>
+              <th>Man 2</th>
+                <td style="background-color:#ffd5cd">w2</td>
+                <td>w1</td>
+                <td>w4</td>
+                <td>w3</td>
+            </tr>
+            <tr>
+              <th>Man 3</th>
+                <td>w2</td>
+                <td style="background-color:#c3aed6">w3</td>
+                <td>w4</td>
+                <td>w1</td>
+            </tr>
+            <tr>
+              <th>Man 4</th>
+                <td>w3</td>
+                <td>w1</td>
+                <td class="tableValues">w4</td>
+                <td>w2</td>
+            </tr>
+            <tr>
+              <th>Woman 1</th>
+                <td style="background-color:#ccf6c8">m1</td>
+                <td>m3</td>
+                <td>m4</td>
+                <td>m2</td>
+            </tr>
+            <tr>
+              <th>Woman 2</th>
+                <td>m1</td>
+                <td style="background-color:#ffd5cd">m2</td>
+                <td>m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 3</th>
+                <td>m1</td>
+                <td>m2</td>
+                <td style="background-color:#c3aed6">m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 4</th>
+                <td class="tableValues">m4</td>
+                <td>m3</td>
+                <td>m2</td>
+                <td>m1</td>
+            </tr>
+          </table>
+          <em><p style="font-family: verdana">Step 5:Since all the matching is done, and there exists no such person who would rather have someone else as their partner, their engagement moves on to marriage!</p></em>
+          <table>
+            <tr>
+              <th>Members</th>
+              <th colspan="4">Preferences</th>
+            </tr>
+            <tr>
+              <th>Man 1</th>
+                <td style="background-color:#ccf6c8">w1</td>
+                <td>w2</td>
+                <td>w3</td>
+                <td>w4</td>
+            </tr>
+            <tr>
+              <th>Man 2</th>
+                <td style="background-color:#ffd5cd">w2</td>
+                <td>w1</td>
+                <td>w4</td>
+                <td>w3</td>
+            </tr>
+            <tr>
+              <th>Man 3</th>
+                <td>w2</td>
+                <td style="background-color:#c3aed6">w3</td>
+                <td>w4</td>
+                <td>w1</td>
+            </tr>
+            <tr>
+              <th>Man 4</th>
+                <td>w3</td>
+                <td>w1</td>
+                <td style="background-color:#f9d89c">w4</td>
+                <td>w2</td>
+            </tr>
+            <tr>
+              <th>Woman 1</th>
+                <td style="background-color:#ccf6c8">m1</td>
+                <td>m3</td>
+                <td>m4</td>
+                <td>m2</td>
+            </tr>
+            <tr>
+              <th>Woman 2</th>
+                <td>m1</td>
+                <td style="background-color:#ffd5cd">m2</td>
+                <td>m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 3</th>
+                <td>m1</td>
+                <td>m2</td>
+                <td style="background-color:#c3aed6">m3</td>
+                <td>m4</td>
+            </tr>
+            <tr>
+              <th>Woman 4</th>
+                <td style="background-color:#f9d89c">m4</td>
+                <td>m3</td>
+                <td>m2</td>
+                <td>m1</td>
+            </tr>
+          </table>
+          <p style="font-family: verdana">The optimal solution of the given stable marriage problem is:</p>
+          <table>
+            <tr>
+              <th>Woman</th>
+              <th>Man</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>4</td>
+            </tr>
+          </table>
+          <br>
+      </div>
+      <hr>
+      <br>
+      <p style="font-family: verdana">Go to the problem and try yourself.
+      <a href="stable_marriage_html.html"><button type="button" class="btn btn-outline-primary">Problem</button></a></p>
+      <br><br>
+      <hr>
+    </div>
+
+  </body>
+</html>

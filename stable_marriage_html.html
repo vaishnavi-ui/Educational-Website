@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Stable Marriage Problem</title>
+    <!-- to linke css file to this html file for styles-->
+    <link rel="stylesheet" href="stable_marriage_style.css">
+    <!-- bootstrap's CSS link for navbar,button-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- linking the html page of stable marriage problem to its javascript page-->
+      <script type="text/javascript" src="stable_marriage_script.js"></script>
+  </head>
+  <body>
+    <div class="nav-options" id="navbar">
+        <div class="container-fluid">
+          <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #7579e7;">
+            <ul class="navbar-nav ml-auto">
+              <!--<a class="navbar-brand mb-0 h1" href="#">Design and Analysis of Algorithms</a>-->
+              <li class="nav-item"><a class="nav-link" href="AboutUs.html">About</a></li>
+              <li class="nav-item"><a class="nav-link" href="Homepage.html">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="stable_info.html">Stable Marriage Problem</a></li>
+              <li class="nav-item"><a class="nav-link" href="AssignmentProblem.html">Assignment Problem</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    <div class="top-divs">
+      <h1>Stable Marriage Problem</h1>
+    </div>
+<div class="entry">
+  <!--<form name="myform" class="first-form" method="post" action="" onsubmit="persons()">-->
+    <!-- take user input for no of couple, men and women-->
+    <label style="font-size:180%;">Enter the no of couples to be formed:</label>
+    <input type="number" min="1" max="10" name="no" id="num" required><br>
+    <em>Enter preferences only according to IDs as result will also be provided in IDs</em><br><br>
+    <!-- taking submit from user to call the function persons()-->
+    <input type="submit" value="Submit now" onclick="persons()"><br>
+    <hr>
+    <!-- div to dynamically add the no of men and women and their preferences-->
+    <!--</form>-->
+</div>
+<!-- div to take preference inputs of people-->
+<div class="people_entry" id="people_entry">
+</div>
+<!-- div to display the matched couples-->
+<div class="matched" id="matched">
+</div>
+  </body>
+</html>

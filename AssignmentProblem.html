@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Assignment Problem</title>
+    <!--  CSS link-->
+    <link rel="stylesheet" href="AssignmentProblem_Style.css">
+    <!-- bootstrap's CSS link for navbar-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- font awesome link to add different icons -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Comfortaa&family=Patua+One&display=swap" rel="stylesheet">
+    <style>
+    	body{
+    		margin: 100px;
+    		margin-bottom: 200px;
+    		font-weight: 540;
+    		font-family: 'Georgia';
+    	}
+    	
+    	td,th{
+    		height: 4px;
+    		width: 100px;
+    	}
+    	h3,h2{
+    		text-align: center;
+    	}
+    	@keyframes flickers{
+    		from {background-color: white;}
+    		to{background-color: thistle;}
+    	}
+    	.tableValues{
+    		background-color: white;
+    		animation-name: flickers;
+    		animation-duration: 2s;
+    		animation-iteration-count: infinite;
+    	}
+    	.lines{
+    		font-weight: 700;
+    		background-color: salmon;
+    	}
+    	.uncovered{
+    		background-color: lightyellow;
+    		font-weight: 700;
+    	}
+    	.intersect{
+    		background-color: lavender;
+    		font-weight: 700;
+    	}
+    	    	@keyframes flicker{
+    		from{background-color: orange;}
+    		to {background-color: yellow;}
+    	}
+    	.min{
+    		background-color: orange;
+    		font-weight: 700;
+    		transition-duration: 1s;
+    		animation-name: flicker;
+    		animation-duration: 0.5s;
+    		animation-iteration-count: infinite;
+    	}
+
+    	aside{
+    		background-color: lightgray;
+    		border-style: solid;
+    		border-color: gray;
+    		font-size: 15px;
+    		text-align: center;
+    		font-weight: 450;
+    		margin-top:30px;
+    		font-family: Georgia;
+    	}
+    	#footer{
+    		background-color: #0275d8;
+    		font-weight: 700;
+    	}
+    	#footer a{
+    		color: black;
+    	}
+    	#footer a:after{
+    		content: ' \21E7'
+    	}
+    	button:hover{
+    		background-color:#7579e7
+    	}
+    </style>
+</head>
+<body>
+	<div class="nav-options" id="navbar">
+      <div class="container-fluid">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #7579e7">
+          <ul class="navbar-nav ml-auto">
+            <!--<a class="navbar-brand mb-0 h1" href="#">Design and Analysis of Algorithms</a>-->
+            <li class="nav-item"><a class="nav-link" href="HomePage_New.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="AboutUs.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="stable_info.html">Stable Marriage Problem</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Assignment Problem</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div>
+    <a id="Intro">
+    <div style="float: left;width: 75%;height: 380px;">
+    <h2 style="font-family: 'Berkshire Swash', cursive;"><em>The Assignment Problem</em></h2>
+    <hr>
+    <p>In this article we discuss the <strong>Assignment Problem</strong>. The assignment problem is when we want to assign tasks to agents such that the cost is minimized. To solve this, we use the <strong>Hungarian Algorithm</strong> which is a combinatorial optimization algorithm. We discuss the problem, example, approaches, the hungarian algorithm and solve an example using hungarian. Use the following links to navigate:
+    	<ul>
+    		<li><a href="#AboutProblem">About the Problem</a></li>
+    		<li><a href="#Example">Example of Assignment Problem</a></li>
+    		<li><a href="#Approaches">Approaches on solving the assignment problem</a></li>
+    		<li><a href="#HungarianAlgo">Hungarian Algorithm</a></li>
+    		<li><a href="#ExpUsingAlgo">An Example using Hungarian Algorithm</a></li>
+    		<li><a href="#Applications">Applications of the Assignment Problem</a></li>
+    		<li><a href="AssignmentProb_Implementation.html">Try the Problem Yourself! Go to Implementation</a></li>
+
+    	</ul></p>
+    </div>
+    <div style="float: right;width: 25%;height: 380px;text-align: left;">
+    	<img src="assignment2.jpg" height="250px" width="300px" style="margin-top: 100px;">
+    </div>
+    </a>
+    
+	<div style="width: 100%">
+	    <a id="AboutProblem">
+		    <h3 style="font-family: 'Berkshire Swash', cursive;">What is the problem about?</h3>
+		    <hr>
+		    <div style="width: 30%;float: left; height: 300px;">
+		    	<img src="AssignmentIntro.jpg">
+		    </div>
+		    <div style="width: 70%;float: right;height: 300px;">
+		    <p>Let there be n agents and n tasks. Any agent can be assigned to perform any task, incurring some cost that may vary depending on the agent-task assignment. It is required to perform all tasks by assigning exactly one agent to each task and exactly one task to each agent in such a way that the total cost of the assignment is minimized.<br>
+		    We need to ensure the following things: 
+			<ol>
+			<li> The number of assignments and agents should be the same.</li>
+			<li> Each agent should be assigned only one job and every job should be assigned only one agent</li>
+			<li> We want to find the feasible solution which will consume the minimum cost</li></ol></p>
+		</div>
+		</a>
+	</div>
+    <a id="Applications">
+	<div>
+		<h3 style="font-family: 'Berkshire Swash', cursive;">Applications of the Assignment Problem</h3>
+		<hr>
+		<ol>
+			<li>Assignment machines to factory orders.</li>
+			<li>Assigning sales/marketing people to territories.</li>
+			<li>Assigning teachers to classes.</li>
+			<li>Assigning police vehicles to patrolling areas.</li>
+		</ol>
+	</div>
+</a>
+	<div>
+    	<a id="Example">
+	    	<h3 style="font-family: 'Berkshire Swash', cursive; text-align: center;">Example</h3><hr>
+	    	<p>Problem: In a construction site there are 4 cranes. Each crane must be allocated to one job. The time required for each job for each crane is shown in the table below. Find the best assignment of cranes to the jobs so that the time required to finish the jobs is minimum.</p>
+	  		<div style="width: 50% ; float: left; height: 250px">
+		    	<table>
+				   	<tr>
+				   		<th>     </th>
+				   		<th>Job 1</th>
+				   		<th>Job 2</th>
+				   		<th>Job 3</th>
+				   		<th>Job 4</th>
+				   	</tr>
+				   	<tr>
+				   		<td><b>Crane 1</b></td>
+				   		<td class="tableValues">4</td>
+				   		<td>2</td>
+				   		<td>5</td>
+				   		<td>7</td>
+				   	</tr>
+				   	<tr>
+				   		<td><b>Crane 2</b></td>
+				   		<td>8</td>
+				   		<td class="tableValues">3</td>
+				   		<td>10</td>
+				   		<td>8</td>
+				   	</tr>
+				   	<tr>
+				   		<td><b>Crane 3</b></td>
+				   		<td>12</td>
+				   		<td>5</td>
+				   		<td>4</td>
+				   		<td class="tableValues">5</td>
+				   	</tr>
+				   	  <tr>
+				   		<td><b>Crane 4</b></td>
+				   		<td>6</td>
+				   		<td>3</td>
+				   		<td class="tableValues">7</td>
+				   		<td>14</td>
+				   	</tr>
+				</table>
+			</div>
+			<div style="float: right;width: 50%; height: 250px;">
+				<table align="center">
+					<tr>
+						<th>Job</th>
+			 			<th>Crane</th>
+			   			<th>Time</th>
+			   		</tr>
+			   		<tr>
+			   			<td>Job 1</td>
+			   			<td>Crane 1</td>
+			   			<td> 4</td>
+			   		</tr>
+			   		<tr>
+			   			<td>Job 2</td>
+			   			<td>Crane 2</td>
+			   			<td> 3</td>
+			   		</tr>
+			   		<tr>
+			   			<td>Job 3</td>
+			   			<td>Crane 4</td>
+			   			<td>5</td>
+			   		</tr>
+			  		<tr>
+			   			<td>Job 4</td>
+			   			<td>Crane 3</td>
+			   			<td>7</td>
+			   		</tr>
+				   	<tr>
+			   			<td colspan=3>Total Time=19</td>
+			   		</tr>
+				</table>
+			   	<figcaption style="margin-left: 250px;">Most Optimal Solution</figcaption>
+			</div>
+		</a>		    		   				
+   	</div>   	
+    <div>
+   		<a id="Approaches">
+	   		<h3 align="center" style="font-family: 'Berkshire Swash', cursive;">Approaches</h3><hr>
+	   		<div style="float: left;width: 60%;height: 260px;">
+		   		<ul>
+		   			<li><strong><em>Approach 1: Brute Force</em></strong><br>
+		   				Here we try all the combinations one by one to find the optimal solution. This is a tedious approach because as the number of tasks and cranes go on increasing (demonstrated in the figure), the number of calculations also increase alot. The complexity is n! which is very inefficient.</li>
+		   			<li><strong><em>Approach 2: Greedy Approach</em></strong><br>
+		    			In this case, the algorithm will choose the lowest cost worker to be assigned to the task as the first assignment, then choose the next lowest cost worker to be assigned to the task, and so on until all tasks have been assigned. The algorithm repeats this procedure until all workers have at least one task. Greedy algorithms try to get close to the optimal solution by improving a candidate solution iteratively, with no guarantee that an optimal solution will actually be found. </li>
+		  	</ul>
+		  </div>
+		  <div style="float: right;width: 40%; height: 260px;"id="BruteForce">
+	    		<table align="center" style="border-style: none;">
+	    			<tr>
+	    				<td>n</td>
+	    				<td>Solution</td>
+	    				<td>Complexity</td>
+	    			</tr>
+	    			<tr>
+	    				<td>3</td>
+	    				<td>3!</td>
+	    				<td>6</td>
+	    			</tr>
+	    			<tr>
+	    				<td>5</td>
+	    				<td>5!</td>
+	    				<td>120</td>
+	    			</tr>
+	    			<tr>
+	    				<td>8</td>
+	    				<td>8!</td>
+	    				<td>40320</td>
+	    			</tr>
+	    			<tr>
+	    				<td>10</td>
+	    				<td>10!</td>
+	    				<td>3628800</td>
+	    			</tr>
+	    			<tr>
+	    				<td>50</td>
+	    				<td>100!</td>
+	    				<td>3.0414093e+64</td>
+	    			</tr>
+	    		</table>
+	    	</div>
+	    	<div style="float: right;width: 60%;height: 250px;" id="BruteForce">
+	    		<ul>
+		    		<li><strong><em>Approach 3: Graph Approach</em></strong><br>
+		    			The algorithm is easier to describe if we formulate the problem using a bipartite graph. We have a complete bipartite graph G=(S, T; E) with n worker vertices S and n job vertices (T), and each edge has a nonnegative cost c(i,j). We want to find a perfect matching with a minimum total cost.</li>		    		
+		    		<li><strong><em>Approach 3: Hungarian Algorithm</em></strong><br>
+		    			The Hungarian Algorithm is a combinatorial optimization algorithm which is a faster approach which solves the problem in polynomial time complexity. We see the hungarian approach ahead.</li>
+		    		<div>
+		    	</ul>
+	    	</div>
+	    	<div style="float: left;height: 40%;height: 250px;">
+	    		<img src="GraphImage.jpg" height="200px" width="300px" style="margin-left: 100px;">
+	    	</div>
+	    	
+    	</a>
+   	</div>
+   	<div style="height: 450px;">
+   		<a id="HungarianAlgo">
+	   		<h3 style="font-family: cursive;">Algorithm</h3><hr>
+	   		<div style="float: left; width: 60%;height: 350px;">
+		   		<ol>
+			   		<li> Find the minimum from each row and substract that value from all the elements of the row.</li>
+			   		<li> Find the minimum from each coloumn and substract that value from all the elements of the coloumn.</li>
+			   		<li> Let m=minimum number of lines required to cover all the zeroes in the table</li>
+			   		<li> while(m!=number of row/columns)
+			   		<ol style="list-style-type: lower-roman;">
+			   			<li>Find the minimum element from the uncovered elements</li>
+			   			<li>Substract this element from all the other uncovered elements</li>
+			   			<li>Add this element to the elements where the lines are intersecting</li>
+			   			<li>Find new m</li>
+			   		</ol></li>
+			   		<li>Use the zeroes to assign possible combinations- i.e wherever there is a zero present, task can be assigned.(Use of Backtracking)</li>
+			   		<li>Find the minimum cost</li>
+			   		<li>End</li>
+		   		</ol>
+	   		</div>
+	   		<div style="float: right;width: 40%;height: 350px;">
+	   			<div style="float: right;width: 50%">
+		   		<aside>
+		   			<p><h6>Facts about the Algorithm</h6><hr style="width: 200px; padding: 0px; background-color: black;">
+		   			The algorithm was developed and published in 1955 by Harold Kuhn, who gave the name "Hungarian method" because the algorithm was largely based on the earlier works of two Hungarian mathematicians: Dénes Kőnig and Jenő Egerváry.</p>
+					
+		   		</aside>
+	   		</div>
+	   	</div>
+   		</a>
+   	</div>
+    <div>
+    	<br><br><br><br><br>
+    	<a id="ExpUsingAlgo">
+	   		<h3 style="font-family: 'Berkshire Swash', cursive;">Solving an Example Using Hungarian Problem</h3>
+	   		<hr>
+	   		<div>
+		   		<p><em><strong>STEP 1: Finding the minimum from each row and substracting it from all the other row elements</strong></em></p> 
+		   		<div style="float: left;width: 50%;">
+		   		<table>
+			    		<tr>
+		    			<th>     </th>
+			   			<th>Job 1</th>
+			   			<th>Job 2</th>
+			    			<th>Job 3</th>
+			    			<th>Job 4</th>
+			    		</tr>
+			    		<tr>
+			    			<td><b>Crane 1</b></td>
+			    			<td>4</td>
+			    			<td class="tableValues">2</td>
+			    			<td>5</td>
+			    			<td>7</td>
+			    		</tr>
+			    		<tr>
+			    			<td><b>Crane 2</b></td>
+			    			<td>8</td>
+			    			<td class="tableValues">3</td>
+			    			<td>10</td>
+			    			<td>8</td>
+			    		</tr>
+			    		<tr>
+			    			<td><b>Crane 3</b></td>
+				   			<td>12</td>
+				   			<td>5</td>
+				   			<td class="tableValues">4</td>
+				   			<td>5</td>
+				   		</tr>
+				   		 <tr>
+				   			<td><b>Crane 4</b></td>
+				   			<td>6</td>
+				   			<td class="tableValues">3</td>
+				   			<td>7</td>
+				   			<td>14</td>
+				   		</tr>
+			    	</table>
+		    	</div>
+		    	<div style="float: right;width: 50%;">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td>2</td>
+				   			<td>0</td>
+				   			<td>3</td>
+				   			<td>5</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td>5</td>
+				   			<td>0</td>
+				   			<td>7</td>
+				   			<td>5</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td>8</td>
+				   			<td>1</td>
+				   			<td>0</td>
+				   			<td>1</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td>3</td>
+				    		<td>0</td>
+				    		<td>4</td>
+				    		<td>11</td>
+				    	</tr>
+			    	</table>
+		    	</div>
+		    </div>
+		    <div>
+		    	<p><em><br><br><strong>STEP 2: Finding the minimum from each column and substracting it from all the other column elements</strong></em></p>
+		    	<div style="float: right;width: 50%;">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td>0</td>
+				   			<td>0</td>
+				   			<td>3</td>
+				   			<td>4</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td>3</td>
+				   			<td>0</td>
+				   			<td>7</td>
+				   			<td>4</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td>6</td>
+				   			<td>1</td>
+				   			<td>0</td>
+				   			<td>0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td>1</td>
+				    		<td>0</td>
+				    		<td>4</td>
+				    		<td>10</td>
+				    	</tr>
+			    	</table>
+					<br><br>
+		    	</div>
+		    	<div style="float: left;width: 50%">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td class="tableValues">2</td>
+				   			<td class="tableValues">0</td>
+				   			<td>3</td>
+				   			<td>5</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td>5</td>
+				   			<td>0</td>
+				   			<td>7</td>
+				   			<td>5</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td>8</td>
+				   			<td>1</td>
+				   			<td class="tableValues">0</td>
+				   			<td class="tableValues">1</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td>3</td>
+				    		<td>0</td>
+				    		<td>4</td>
+				    		<td>11</td>
+				    	</tr>
+			    	</table>    		
+		    	</div>
+		    </div>
+		    <div>
+		   		<p><em><strong>STEP 3: Finding the minimum number of lines required to cover all the zeroes</strong></em></p> 
+		   		<div style="float: left;width: 50%;">
+		   			<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   			<td>3</td>
+				   			<td>4</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td class="lines">3</td>
+				   			<td class="lines">0</td>
+				   			<td>7</td>
+				   			<td>4</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="lines">6</td>
+				   			<td class="lines">1</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td class="lines">1</td>
+				    		<td class="lines">0</td>
+				    		<td>4</td>
+				    		<td>10</td>
+				    	</tr>
+			    	</table>
+		    	</div>
+		    	<div style="float: right;width: 50%;">
+		    		<p> As we in the table, we draw the lines on Column 1, Column 2 and Row 3 and this covers all the zeroes.<br> But the total number of cranes and jobs is 4(n=4)
+		    		and the number of lines is 3 so m(=number of lines)!=n and hence we need to go in Step 4.</p><br><br>
+		    	</div>
+		    </div>
+		    <div>
+		    	<p><em><strong>STEP 4.i and 4.ii: Finding the minimum number of lines required to cover all the zeroes and substract it from the rest of the uncovered elements.
+		    	</strong></em></p> 
+		    	<div style="float: left;width: 50%">
+		    	<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   			<td class="min">3</td>
+				   			<td class="uncovered">4</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td class="lines">3</td>
+				   			<td class="lines">0</td>
+				   			<td class="uncovered">7</td>
+				   			<td class="uncovered">4</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="lines">6</td>
+				   			<td class="lines">1</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td class="lines">1</td>
+				    		<td class="lines">0</td>
+				    		<td class="uncovered">4</td>
+				    		<td class="uncovered">10</td>
+				    	</tr>
+			    	</table>
+			    	<p>From the uncovered elements(in yellow), the minimum element is 3.
+		    	</div>
+		    	<div style="float: right;width: 50%">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   			<td class="uncovered">0</td>
+				   			<td class="uncovered">1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td class="lines">3</td>
+				   			<td class="lines">0</td>
+				   			<td class="uncovered">4</td>
+				   			<td class="uncovered">1</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="lines">6</td>
+				   			<td class="lines">1</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td class="lines">1</td>
+				    		<td class="lines">0</td>
+				    		<td class="uncovered">1</td>
+				    		<td class="uncovered">7</td>
+				    	</tr>
+			    	</table>
+			    	<p>We substract 3 from all the uncovered elements.
+		    	</div>
+		    </div>
+		    <div>
+		    	<p><em><strong>Step 4.iii. Now we add the minimum element from the previous step to the elements where lines are intersecting.</strong></em></p>
+		    	<div style="float: left; width: 50%">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   			<td>0</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td class="lines">3</td>
+				   			<td class="lines">0</td>
+				   			<td>4</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="intersect">6</td>
+				   			<td class="intersect">1</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td class="lines">1</td>
+				    		<td class="lines">0</td>
+				    		<td>1</td>
+				    		<td>7</td>
+				    	</tr>
+			    	</table>
+			    	<p>Here we see that element in Column 1 Row 3 and Column 2  Row 3 are the points of intersection and so we add 3 to the values.</p>
+		    	</div>
+		    	<div style="float: right;width: 50%">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td>0</td>
+				   			<td>0</td>
+				   			<td>0</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td>3</td>
+				   			<td>0</td>
+				   			<td>4</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="intersect">9</td>
+				   			<td class="intersect">4</td>
+				   			<td>0</td>
+				   			<td>0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td>1</td>
+				    		<td>0</td>
+				    		<td>1</td>
+				    		<td>7</td>
+				    	</tr>
+			    	</table>
+			    	<p>New values after adding 3.</p><br>
+		    	</div>
+		    </div>
+		    <div>
+		    	<p><em><strong>Step 4.iv. Finding the minimum number of lines required to cover all the zeroes.</strong></em></p>
+		    	<div style="float: left;width: 50%;">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td>3</td>
+				   			<td class="lines">0</td>
+				   			<td>4</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="lines">9</td>
+				   			<td class="lines">4</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td>1</td>
+				    		<td class="lines">0</td>
+				    		<td>1</td>
+				    		<td>7</td>
+				    	</tr>
+			    	</table>
+		    	</div>
+		    	<div style="float: right;width: 50%">
+		    		<p> Now we see that upon drawing the lines on Row 1, Row 2 and Column 2, all the zeroes are covered.<br>
+		    		But still the number of lines(m) is not equal to the number of rows/columns(n) and so we repeat step 4 again.</p><br><br><br><br>
+		    	</div>
+		    </div>
+		    <div>
+		    	<p><em><strong>Step 4.i.ii.iii. Finding the minimum from the uncovered elements, substracting it from the rest of the uncovered elements 
+		    	and adding that element to the elements where lines are intersecting.</strong></em></p>
+		    	<div style="float: left; width: 50%">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td class="lines">0</td>
+				   			<td class="intersect">0</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td class="uncovered">3</td>
+				   			<td class="lines">0</td>
+				   			<td class="uncovered">4</td>
+				   			<td class="min">1</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="lines">9</td>
+				   			<td class="intersect">4</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td class="uncovered">1</td>
+				    		<td class="lines">0</td>
+				    		<td class="uncovered">1</td>
+				    		<td class="uncovered">7</td>
+				    	</tr>
+			    	</table>
+			    	<p> Here the elements in yellow are the uncovered elements, orange is the minimum element and blue are the interecting elements.</p>
+		    	</div>
+		    	<div style="float: right;width: 50%">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td class="lines">0</td>
+				   			<td class="intersect">1</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td class="uncovered">2</td>
+				   			<td class="lines">0</td>
+				   			<td class="uncovered">3</td>
+				   			<td class="min">0</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="lines">9</td>
+				   			<td class="intersect">5</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td class="uncovered">0</td>
+				    		<td class="lines">0</td>
+				    		<td class="uncovered">0</td>
+				    		<td class="uncovered">6</td>
+				    	</tr>
+			    	</table>
+			    	<p>After substracting the min value from uncovered elements and adding it to the intersecting elements.</p>	    		
+		    	</div>
+		    </div>
+		    <div>
+		    	<p><em><strong>Step 4.iv. Finding the minimum number of lines required to cover all the zeroes.</strong></em></p>
+		    	<div style="float: left;width: 50%">
+					<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr class="lines">
+				   			<td style="background-color: white;"><b>Crane 1</b></td>
+				   			<td>0</td>
+				   			<td>3</td>
+				   			<td>0</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr class="intersect">
+				  			<td style="background-color: white;"><b>Crane 2</b></td>
+				   			<td>2</td>
+				   			<td>0</td>
+				   			<td>2</td>
+				   			<td>0</td>
+				   		</tr>
+				   		<tr class="lines">
+				   			<td style="background-color: white;"><b>Crane 3</b></td>
+				   			<td>9</td>
+				   			<td>3</td>
+				   			<td>0</td>
+				   			<td>0</td>
+				   		</tr>
+						<tr class="intersect">
+				   			<td style="background-color: white;"><b>Crane 4</b></td>
+				    		<td>0</td>
+				    		<td>0</td>
+				    		<td>0</td>
+				    		<td>6</td>
+				    	</tr>
+			    	</table>
+		    	</div>
+		    	<div style="float: right;width: 50%">
+		    		<p>Now we see that on drawing vertical lines on row 1, row 2, row 3, row 4 we have covered all the zeroes in <strong>minimum</strong> number of lines.<br>
+		    		So now our number of lines(m)=number of rows/columns(n)=4 and so we have reached an optimal solution. Now we go ahead to step 5.</p><br><br><br><br>
+		    	</div>
+		    </div>
+		    <div>
+		    	<p><em><strong>Step 5: Use the zeroes to assign possible combinations- i.e wherever there is a zero present, task can be assigned.(Use of Backtracking)</strong></em></p>
+		    	<div style="float: left;width: 50%">
+		    	<table style="float: left; width: 60%; margin-right: 10px; ">
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td>0</td>
+				   			<td>3</td>
+				   			<td>0</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td>2</td>
+				   			<td>0</td>
+				   			<td>2</td>
+				   			<td>0</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td>9</td>
+				   			<td>3</td>
+				   			<td>0</td>
+				   			<td>0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td>0</td>
+				    		<td>0</td>
+				    		<td>0</td>
+				    		<td>6</td>
+				    	</tr>
+			    	</table>
+					<br><br><br><br><br><br><br><br>
+			    	<p>Now we assign the jobs to the cranes</p>
+		    	</div>
+		    	<div style="float: right;width: 50%">
+		    	<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td>0</td>
+				   			<td>3</td>
+				   			<td>0</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td class="lines">2</td>
+				   			<td>0</td>
+				   			<td>2</td>
+				   			<td>0</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="lines">9</td>
+				   			<td>3</td>
+				   			<td>0</td>
+				   			<td>0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td class="lines">0</td>
+				    		<td>0</td>
+				    		<td>0</td>
+				    		<td>6</td>
+				    	</tr>
+			    	</table>
+			    	<p> Job 1 is assigned to Crane 1.</p>
+		    	</div>
+		    </div>
+		    <div>
+		    	<p><em><strong>Continuing previous step.</strong></em></p>
+		    	<div style="float: left;width: 50%">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td>0</td>
+				   			<td class="lines">3</td>
+				   			<td>0</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td class="lines">2</td>
+				   			<td>0</td>
+				   			<td>2</td>
+				   			<td>0</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="lines">9</td>
+				   			<td class="lines">3</td>
+				   			<td>0</td>
+				   			<td>0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td class="lines">0</td>
+				    		<td class="lines">0</td>
+				    		<td>0</td>
+				    		<td>6</td>
+				    	</tr>
+			    	</table>
+			    	<p> Job 2 is assigned to Crane 2.</p>
+		    	</div>
+		    	<div style="float: right;width: 50%">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td>0</td>
+				   			<td class="lines">3</td>
+				   			<td class="lines">0</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td class="lines">2</td>
+				   			<td >0</td>
+				   			<td class="lines">2</td>
+				   			<td>0</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="lines">9</td>
+				   			<td class="lines">3</td>
+				   			<td class="lines">0</td>
+				   			<td>0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td class="lines">0</td>
+				    		<td class="lines">0</td>
+				    		<td>0</td>
+				    		<td>6</td>
+				    	</tr>
+			    	</table>
+			    	<p> Job 3 is assigned to Crane 4.</p>
+		    	</div>
+		    </div>
+		    <div>
+		    	<p><em><strong>Continuing previous step.</strong></em></p>
+		    	<div style="float: left;width: 50%">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td>0</td>
+				   			<td class="lines">3</td>
+				   			<td class="lines">0</td>
+				   			<td class="lines">1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td class="lines">2</td>
+				   			<td>0</td>
+				   			<td class="lines">2</td>
+				   			<td class="lines">0</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td class="lines">9</td>
+				   			<td class="lines">3</td>
+				   			<td class="lines">0</td>
+				   			<td>0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td class="lines">0</td>
+				    		<td class="lines">0</td>
+				    		<td>0</td>
+				    		<td class="lines">6</td>
+				    	</tr>
+			    	</table>
+			    	<p> Job 4 is assigned to Crane 3.</p>
+		    	</div>
+		    	<div style="float: left;width: 50%">
+		    		<table>
+				   		<tr>
+				   			<th>     </th>
+				   			<th>Job 1</th>
+				   			<th>Job 2</th>
+				   			<th>Job 3</th>
+				   			<th>Job 4</th>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 1</b></td>
+				   			<td class="intersect">0</td>
+				   			<td>3</td>
+				   			<td>0</td>
+				   			<td>1</td>
+				   		</tr>
+				   		<tr>
+				  			<td><b>Crane 2</b></td>
+				   			<td>2</td>
+				   			<td class="intersect">0</td>
+				   			<td>2</td>
+				   			<td>0</td>
+				   		</tr>
+				   		<tr>
+				   			<td><b>Crane 3</b></td>
+				   			<td>9</td>
+				   			<td>3</td>
+				   			<td>0</td>
+				   			<td class="intersect">0</td>
+				   		</tr>
+						<tr>
+				   			<td><b>Crane 4</b></td>
+				    		<td>0</td>
+				    		<td>0</td>
+				    		<td class="intersect">0</td>
+				    		<td>6</td>
+				    	</tr>
+			    	</table>
+			    	<p> So these are the final assignments of jobs to the cranes.</p>
+		    	</div>
+		    </div>
+		    <div>
+		    	<p><em><strong>Now assigning these values in the original table and finding the minimum cost.</strong></em></p>
+		    	<div style="float: left;width: 50%">
+		    		<table>
+				    	<tr>
+				    		<th>     </th>
+				    		<th>Job 1</th>
+				    		<th>Job 2</th>
+				      		<th>Job 3</th>
+				    		<th>Job 4</th>
+				    	</tr>
+				    	<tr>
+				    		<td><b>Crane 1</b></td>
+				    		<td class="tableValues">4</td>
+				    		<td>2</td>
+				    		<td>5</td>
+				    		<td>7</td>
+				    	</tr>
+				    	<tr>
+				    		<td><b>Crane 2</b></td>
+				    		<td>8</td>
+				    		<td class="tableValues">3</td>
+				    		<td>10</td>
+				    		<td>8</td>
+				    	</tr>
+				    	<tr>
+				    		<td><b>Crane 3</b></td>
+				    		<td>12</td>
+				    		<td>5</td>
+				    		<td>4</td>
+				    		<td class="tableValues">5</td>
+				    	</tr>
+				    	  <tr>
+				    		<td><b>Crane 4</b></td>
+				    		<td>6</td>
+				    		<td>3</td>
+				    		<td class="tableValues">7</td>
+				    		<td>14</td>
+				    	</tr>
+				   	</table>
+		    	</div>
+		    	<div style="float: right;width: 50%">
+		    		   	<table>
+					  		<tr>
+					   			<th>Job</th>
+					   			<th>Crane</th>
+					   			<th>Time</th>
+					   		</tr>
+					   		<tr>
+					   			<td>Job 1</td>
+					   			<td>Crane 1</td>
+					   			<td> 4</td>
+					   		</tr>
+					   		<tr>
+					   			<td>Job 2</td>
+					   			<td>Crane 2</td>
+					   			<td> 3</td>
+					   		</tr>
+					   		<tr>
+					   			<td>Job 3</td>
+					   			<td>Crane 4</td>
+					   			<td>5</td>
+					   		</tr>
+					   		<tr>
+					   			<td>Job 4</td>
+					   			<td>Crane 3</td>
+					   			<td>7</td>
+					   		</tr>
+					   		<tr >
+					   			<td colspan=3>Total Time=19</td>
+					   			</tr>
+					   	</table>
+		    	</div>
+		    	<p>Hence now we have come to the <strong>optimal solution</strong> and have found the minimum time required to compelete all the jobs.</p>
+		    </div>
+		    <div>
+		    	<p><em><strong>If we assume the other combinations, we will still get the same answer of minimum vlaue.</strong></em></p>
+		    	<div style="float: left;width: 50%">
+		    		<table>
+				    	<tr>
+				    		<th>     </th>
+				    		<th>Job 1</th>
+				    		<th>Job 2</th>
+				      		<th>Job 3</th>
+				    		<th>Job 4</th>
+				    	</tr>
+				    	<tr>
+				    		<td><b>Crane 1</b></td>
+				    		<td>4</td>
+				    		<td>2</td>
+				    		<td class="tableValues">5</td>
+				    		<td>7</td>
+				    	</tr>
+				    	<tr>
+				    		<td><b>Crane 2</b></td>
+				    		<td>8</td>
+				    		<td class="tableValues">3</td>
+				    		<td>10</td>
+				    		<td>8</td>
+				    	</tr>
+				    	<tr>
+				    		<td><b>Crane 3</b></td>
+				    		<td>12</td>
+				    		<td>5</td>
+				    		<td>4</td>
+				    		<td class="tableValues">5</td>
+				    	</tr>
+				    	  <tr>
+				    		<td><b>Crane 4</b></td>
+				    		<td class="tableValues">6</td>
+				    		<td>3</td>
+				    		<td>7</td>
+				    		<td>14</td>
+				    	</tr>
+				   	</table>
+				   	<p><em><strong>Minimum Cost=6+3+5+5=19</strong></em></p>
+		    	</div>
+		    	<div style="float: right;width: 50%">
+		    				    		<table>
+				    	<tr>
+				    		<th>     </th>
+				    		<th>Job 1</th>
+				    		<th>Job 2</th>
+				      		<th>Job 3</th>
+				    		<th>Job 4</th>
+				    	</tr>
+				    	<tr>
+				    		<td><b>Crane 1</b></td>
+				    		<td class="tableValues">4</td>
+				    		<td>2</td>
+				    		<td>5</td>
+				    		<td>7</td>
+				    	</tr>
+				    	<tr>
+				    		<td><b>Crane 2</b></td>
+				    		<td>8</td>
+				    		<td>3</td>
+				    		<td>10</td>
+				    		<td class="tableValues">8</td>
+				    	</tr>
+				    	<tr>
+				    		<td><b>Crane 3</b></td>
+				    		<td>12</td>
+				    		<td>5</td>
+				    		<td class="tableValues">4</td>
+				    		<td>5</td>
+				    	</tr>
+				    	  <tr>
+				    		<td><b>Crane 4</b></td>
+				    		<td>6</td>
+				    		<td class="tableValues">3</td>
+				    		<td>7</td>
+				    		<td>14</td>
+				    	</tr>
+				   	</table>
+				   	<p><em><strong>Minimum Cost=4+3+4+8=19</strong></em></p>
+		    	</div>
+
+		    </div>
+		</a>
+    </div><!--End of the example div-->
+    </div>	</p></div></p>
+
+<p style="font-family: 'Berkshire Swash',cursive;font-size: 30px;"> Go Try the Problem Yourself!</p> <button style="background-color: white;border-style: solid;border-color: #7579e7;border-width: 3px;"><a href="AssignmentProb_Implementation.html" style="text-decoration: none;color: black;">Go to Implementation</a></button>
+				
+        <div style="width: 100%;margin-top: 50px; height: 100px; background-color:#7579e7" id="footer">
+    	<p style="float:left;width: 50%">Copyright: © Riya Tendulkar.<br>
+    	DAA Assignment 2020.<br>
+    	The Assignment Problem</p>
+    	<a href="#Intro">Go Up </a>
+    </div>
+
+  	
+</body>
+
+</html>
